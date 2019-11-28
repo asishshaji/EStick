@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mrkai.estick">
 
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -24,16 +25,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name=".CAM" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".TEst"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <action android:name=".MENU" />
             </intent-filter>
         </activity>
         <activity

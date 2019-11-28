@@ -1,0 +1,80 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mrkai.estick.Registeration">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:layout_marginTop="20dp"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Address"
+        android:inputType="textLongMessage"/>
+
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Age"
+        android:inputType="number" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
+    <EditText
+        android:id="@+id/guardianname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Guardian Name"
+        android:layout_marginTop="20dp"
+        android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/guardianphonenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Guardian Phone number"
+        android:inputType="phone" />
+    <EditText
+        android:id="@+id/guardianaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Guardian Address"
+        android:inputType="textLongMessage"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:id="@+id/savebutton"
+        android:text="Submit" />
+
+</LinearLayout>
+
+</FrameLayout>

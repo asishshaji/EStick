@@ -1,12 +1,19 @@
 package com.mrkai.estick;
 
+import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.telecom.TelecomManager;
 import android.telephony.SmsManager;
 import android.util.Log;
 
@@ -95,6 +102,7 @@ class SerialSocket implements Runnable {
         return dataS;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void run() { // connect & read
         try {
@@ -113,6 +121,8 @@ class SerialSocket implements Runnable {
             return;
         }
         connected = true;
+        SharedPreferences prefs = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+
         try {
             byte[] buffer = new byte[1024];
             int len;
@@ -135,14 +145,38 @@ class SerialSocket implements Runnable {
                     context.startActivity(context.getPackageManager().getLaunchIntentForPackage("com.google.android.apps.googleassistant"));
                 } else if (new String(data).equals("S")) {
                     SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("9400376256", null, "In danger", null, null);
+                    smsManager.sendTextMessage(prefs.getString("guardianphonenumber", "9400376256"), null, prefs.getString("user", "Asish") + "in trouble at location Please help", null, null);
                 } else if (new String(data).equals("A")) {
                     SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage("9400376256", null, "In danger SAS", null, null);
+                    smsManager.sendTextMessage(prefs.getString("guardianphonenumber", "9400376256"), null, prefs.getString("user", "Asish") + " is in not feeling good, at location Please help", null, null);
+
                 } else if (new String(data).equals("M")) {
                     context.startActivity(context.getPackageManager().getLaunchIntentForPackage("com.google.android.apps.maps"));
                 } else if (new String(data).equals("C")) {
                     context.startActivity(new Intent(".CAM"));
+                } else if (new String(data).equals("X")) {
+                    TelecomManager tm = (TelecomManager) context
+                            .getSystemService(Context.TELECOM_SERVICE);
+
+                    if (tm == null) {
+                        // whether you want to handle this is up to you really
+                        throw new NullPointerException("tm == null");
+                    }
+
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ANSWER_PHONE_CALLS) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        tm.acceptRingingCall();
+
+                    }
                 }
                 if (listener != null)
                     listener.onSerialRead(data);
